@@ -38,6 +38,7 @@ module Cardano.CLI.Shelley.Commands
   , VerificationKeyBase64 (..)
   , GenesisKeyFile (..)
   , MetadataFile (..)
+  , StakePoolMetadataFile
   , PrivKeyFile (..)
   , BlockId (..)
   , WitnessSigningData (..)
@@ -522,6 +523,8 @@ data MetadataFile = MetadataFileJSON (File () In)
                   | MetadataFileCBOR (File () In)
 
   deriving Show
+
+type StakePoolMetadataFile = File StakePoolMetadata
 
 newtype GenesisDir
   = GenesisDir FilePath
