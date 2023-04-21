@@ -2,6 +2,8 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Testnet.Util.Runtime
   ( LeadershipSlot(..)
@@ -19,16 +21,27 @@ module Testnet.Util.Runtime
   , poolNodeStdout
   , readNodeLoggingFormat
   , startNode
+  , ShelleyGenesis(..)
+  , shelleyGenesis
+  , getStartTime
+  , fromNominalDiffTimeMicro
   ) where
 
 import           Prelude
 
 import           Control.Monad
-import           Data.Aeson (FromJSON)
+import           Control.Monad.Error.Class
+import           Control.Monad.IO.Class
+import           Control.Monad.Trans.Except
+import           Data.Aeson ((.:))
+import qualified Data.Aeson as A
+import qualified Data.Aeson.Types as A
 import qualified Data.List as L
-
 import           Data.Text (Text)
+import           Data.Time.Clock (UTCTime)
+import           Data.Time.Clock.POSIX (posixSecondsToUTCTime)
 import           GHC.Generics (Generic)
+import           GHC.Stack
 import qualified Hedgehog as H
 import           Hedgehog.Extras.Stock.IO.Network.Sprocket (Sprocket (..))
 import qualified Hedgehog.Extras.Stock.IO.Network.Sprocket as IO
@@ -36,12 +49,14 @@ import qualified Hedgehog.Extras.Stock.String as S
 import qualified Hedgehog.Extras.Test.Base as H
 import qualified Hedgehog.Extras.Test.File as H
 import qualified Hedgehog.Extras.Test.Process as H
-
 import           System.FilePath.Posix ((</>))
 import qualified System.Info as OS
 import qualified System.IO as IO
 import qualified System.Process as IO
 
+import           Cardano.Api
+import           Cardano.Ledger.Crypto (StandardCrypto)
+import           Cardano.Ledger.Shelley.Genesis
 import qualified Testnet.Util.Process as H
 
 data NodeLoggingFormat = NodeLoggingFormatAsJson | NodeLoggingFormatAsText deriving (Eq, Show)
@@ -107,6 +122,22 @@ bftSprockets = fmap nodeSprocket . bftNodes
 
 poolSprockets :: TestnetRuntime -> [Sprocket]
 poolSprockets = fmap (nodeSprocket . poolRuntime) . poolNodes
+
+shelleyGenesis :: (H.MonadTest m, MonadIO m, HasCallStack) => TestnetRuntime -> m (ShelleyGenesis StandardCrypto)
+shelleyGenesis TestnetRuntime{shelleyGenesisFile} = withFrozenCallStack $
+  H.evalEither =<< H.evalIO (A.eitherDecodeFileStrict' shelleyGenesisFile)
+
+getStartTime :: (H.MonadTest m, MonadIO m, HasCallStack) => FilePath -> TestnetRuntime -> m UTCTime
+getStartTime tempRootPath TestnetRuntime{configurationFile} = withFrozenCallStack $ H.evalEither <=< H.evalIO . runExceptT $ do
+  testnetConfig <- ExceptT $ A.eitherDecodeFileStrict' configurationFile
+  byronGenesisFile <- liftEither $ A.parseEither
+      (A.withObject ("testnet configuration file: " <> configurationFile) (.: "ByronGenesisFile"))
+      testnetConfig
+  let byronGenesisFilePath = tempRootPath </> byronGenesisFile
+  genesisConfig <- ExceptT $ A.eitherDecodeFileStrict' byronGenesisFilePath
+  fmap posixSecondsToUTCTime . liftEither $ A.parseEither
+      (A.withObject ("byron genesis file: " <> byronGenesisFilePath) (.: "startTime"))
+      genesisConfig
 
 readNodeLoggingFormat :: String -> Either String NodeLoggingFormat
 readNodeLoggingFormat = \case
