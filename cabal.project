@@ -27,10 +27,6 @@ packages:
     cardano-submit-api
     cardano-testnet
     cardano-tracer
-    bench/cardano-topology
-    bench/locli
-    bench/plutus-scripts-bench
-    bench/tx-generator
     trace-dispatcher
     trace-resources
     trace-forward
@@ -69,9 +65,6 @@ package cardano-tracer
   ghc-options: -Werror
 
 package locli
-  ghc-options: -Werror
-
-package plutus-scripts-bench
   ghc-options: -Werror
 
 package trace-analyzer

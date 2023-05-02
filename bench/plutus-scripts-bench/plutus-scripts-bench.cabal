@@ -49,6 +49,8 @@ library
   import:          common-definitions
                  , project-config
   hs-source-dirs:  src
+  if impl(ghc < 8.11)
+    buildable: False
 
   if flag(unexpected_thunks)
     cpp-options: -DUNEXPECTED_THUNKS
