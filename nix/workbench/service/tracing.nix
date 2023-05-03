@@ -10,7 +10,7 @@
   ##
   TraceOptions  = {
     "" =
-      { severity = "Info";
+      { severity = "Debug";
         backends = [
           "Stdout MachineFormat"
           "EKGBackend"
@@ -22,19 +22,9 @@
 
     ## These are comparision-specific config deviations from the default.
     ##
-    "Resources".backends = ["EKGBackend"];
+    ## "Resources".backends = ["EKGBackend"];
     "Net.Net.AcceptPolicy".severity = "Info";
-    "BlockFetch.Client".severity = "Silence";
-    "BlockFetch.Decision".severity = "Silence";
-    "BlockFetch.Remote".severity = "Silence";
-    "BlockFetch.Remote.Serialised".severity = "Silence";
-    "BlockFetch.Server".severity = "Silence";
     "ChainDB".severity = "Info";
-    "ChainSync.Client".severity = "Silence";
-    "ChainSync.Remote".severity = "Silence";
-    "ChainSync.Remote.Serialised".severity = "Silence";
-    "ChainSync.Remote.ServerBlock".severity = "Silence";
-    "ChainSync.Remote.ServerHeader".severity = "Silence";
     "Net.ConnectionManager.Local".severity = "Info";
     "Net.ConnectionManager.Remote".severity = "Info";
     "Net.DNSResolver".severity = "Info";
@@ -42,21 +32,45 @@
     "Net.Startup.DiffusionInit".severity = "Info";
     "Net.ErrorPolicy.Remote".severity = "Info";
     "Forge.Loop".severity = "Info";
-    "Net.Handshake.Remote".severity = "Silence";
     "Net.Subscription.IP".severity = "Info";
     "Net.InboundGovernor".severity = "Info";
-    "ChainSync.Local".severity = "Silence";
     "Net.ErrorPolicy.Local".severity = "Info";
-    "Net.Handshake.Local".severity = "Silence";
     "Net.Peers".severity = "Info";
-    "TxSubmission".severity = "Silence";
     "Mempool".severity = "Info";
-    "Net.Mux".severity = "Silence";
-    "Net.Mux.Remote".severity = "Silence";
     "Net.PeerSelection".severity = "Info";
     "Net.Peers.PublicRoot".severity = "Info";
     "Net.Server".severity = "Info";
-    "TxSubmission.TxInbound".severity = "Silence";
-    "TxSubmission.TxOutbound".severity = "Silence";
+
+    "BlockFetch.Client.CompletedBlockFetch".severity = "Debug";
+    "BlockFetch.Client.SendFetchRequest".severity = "Debug";
+    "BlockFetch.Server.SendBlock".severity = "Debug";
+    "ChainDB.AddBlockEvent.AddedToCurrentChain".severity = "Debug";
+    "ChainDB.LedgerEvent.TookSnapshot".severity = "Debug";
+    "ChainSync.Client.DownloadedHeader".severity = "Debug";
+    "ChainSync.ServerHeader.Update".severity = "Debug";
+    "Forge.Loop.AdoptedBlock".severity = "Debug";
+    "Forge.Loop.BlockContext".severity = "Debug";
+    "Forge.Loop.ForgedBlock".severity = "Debug";
+    "Forge.Loop.LedgerState".severity = "Debug";
+    "Forge.Loop.LedgerView".severity = "Debug";
+    "Forge.Loop.MempoolSnapshot".severity = "Debug";
+    "Forge.Loop.NodeIsLeader".severity = "Debug";
+    "Forge.Loop.NodeNotLeader".severity = "Debug";
+    "Forge.Loop.StartLeadershipCheck".severity = "Debug";
+    "Forge.Loop.TickedLedgerState".severity = "Debug";
+    "Mempool.AddedTx".severity = "Debug";
+    "Mempool.RejectedTx".severity = "Debug";
+    "Mempool.RemoveTxs".severity = "Debug";
+    "TraceBenchTxSubServAck".severity = "Debug";
+    "TraceBenchTxSubSummary".severity = "Debug";
+    "TraceTxSubmissionCollected".severity = "Debug";
+    "TraceTxSubmissionProcessed".severity = "Debug";
+
   };
 }
+
+
+
+
+
+
