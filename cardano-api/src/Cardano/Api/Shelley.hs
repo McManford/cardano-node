@@ -208,6 +208,9 @@ module Cardano.Api.Shelley
     -- ** Local State Query
     DebugLedgerState(..),
     decodeDebugLedgerState,
+    SomeSerialisedDebugLedgerState(..),
+    decodeSomeSerialisedDebugLedgerState,
+    AnyProtocolState(..),
     ProtocolState(..),
     decodeProtocolState,
     SerialisedDebugLedgerState(..),
@@ -225,7 +228,9 @@ module Cardano.Api.Shelley
 
     StakeSnapshot(..),
     SerialisedStakeSnapshots(..),
+    SomeStakeSnapshot(..),
     decodeStakeSnapshot,
+    decodeSomeStakeSnapshot,
 
     UTxO(..),
     AcquiringFailure(..),
