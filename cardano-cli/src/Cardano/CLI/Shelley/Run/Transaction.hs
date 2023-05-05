@@ -335,9 +335,6 @@ runTxBuildCmd
   -- We cannot use the user specified era to construct a query against a node because it may differ
   -- from the node's era and this will result in the 'QueryEraMismatch' failure.
 
-  socketPath <- maybe (lift readEnvSocketPath) (pure . Right) mNodeSocketPath
-    & onLeft (left . ShelleyTxCmdSocketEnvError)
-
   inputsAndMaybeScriptWits <- firstExceptT ShelleyTxCmdScriptWitnessError $ readScriptWitnessFiles cEra txins
   certFilesAndMaybeScriptWits <- firstExceptT ShelleyTxCmdScriptWitnessError $ readScriptWitnessFiles cEra certs
   certsAndMaybeScriptWits <- sequence
