@@ -8,7 +8,6 @@ import           Hedgehog (Group (..), Property, checkSequential)
 import           Hedgehog.Extras (Integration, moduleWorkspace, note_, propertyOnce)
 import           Hedgehog.Extras.Test.Golden (diffVsGoldenFile)
 import           System.FilePath ((</>))
-
 import           Test.OptParse (execCardanoCLI, noteTempFile)
 
 {- HLINT ignore "Use camelCase" -}
