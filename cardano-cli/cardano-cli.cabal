@@ -182,7 +182,7 @@ library test-lib
                       , cardano-cli
                       , exceptions
                       , hedgehog
-                      , hedgehog-extras ^>= 0.4.2
+                      , hedgehog-extras ^>= 0.4.5.1
                       , transformers
 
 test-suite cardano-cli-test
@@ -250,6 +250,7 @@ test-suite cardano-cli-golden
                       , filepath
                       , hedgehog ^>= 1.2
                       , hedgehog-extras ^>= 0.4.5.1
+                      , regex-compat
                       , text
                       , time
                       , transformers
@@ -262,6 +263,7 @@ test-suite cardano-cli-golden
                         Test.Golden.Byron.UpdateProposal
                         Test.Golden.Byron.Vote
                         Test.Golden.Byron.Witness
+                        Test.Golden.Help
                         Test.Golden.Key
                         Test.Golden.Key.NonExtendedKey
                         Test.Golden.Shelley
