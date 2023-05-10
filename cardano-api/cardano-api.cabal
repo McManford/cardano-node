@@ -228,7 +228,7 @@ test-suite cardano-api-test
                       , cardano-slotting ^>= 0.1
                       , containers
                       , hedgehog
-                      , hedgehog-extras ^>= 0.4.3
+                      , hedgehog-extras ^>= 0.4.5.1
                       , hedgehog-quickcheck
                       , mtl
                       , microlens
@@ -274,7 +274,7 @@ test-suite cardano-api-golden
                       , cardano-crypto-class
                       , cardano-ledger-alonzo
                       , containers
-                      , hedgehog-extras >= 0.4.3.0
+                      , hedgehog-extras >= 0.4.5.1
                       , hspec
                       , hw-hspec-hedgehog
                       , plutus-core ^>= 1.1
