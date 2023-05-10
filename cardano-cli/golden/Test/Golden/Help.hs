@@ -32,8 +32,6 @@ filterAnsi line = subRegex ansiRegex stripped ""
 
 {- HLINT ignore "Use camelCase" -}
 
-  -- . Text.takeWhile (\c -> Char.isAlphaNum c || c == '-')
-
 extractCmd :: Text -> [Text]
 extractCmd = id
   . takeWhile nonSwitch
