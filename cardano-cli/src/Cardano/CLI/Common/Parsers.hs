@@ -1,5 +1,6 @@
 module Cardano.CLI.Common.Parsers
-  ( pNetworkId
+  ( command'
+  , pNetworkId
   , pConsensusModeParams
   , pSocketPath
   ) where
@@ -12,8 +13,15 @@ import           Cardano.CLI.Environment (EnvCli (..))
 import           Data.Foldable
 import           Data.Maybe (maybeToList)
 import           Data.Word (Word64)
-import           Options.Applicative (Parser)
+import           Options.Applicative
 import qualified Options.Applicative as Opt
+
+command' :: String -> String -> Parser a -> Mod CommandFields a
+command' c descr p =
+  mconcat
+    [ command c (info (p <**> helper) $ mconcat [ progDesc descr ])
+    , metavar c
+    ]
 
 pNetworkId :: EnvCli -> Parser NetworkId
 pNetworkId envCli = asum $ mconcat
