@@ -13,6 +13,8 @@ import           Options.Applicative
 import qualified Options.Applicative as OA
 import           Text.Read
 
+import           Cardano.CLI.Common.Parsers
+
 import           Testnet
 import           Testnet.Cardano
 import           Testnet.Run (runTestnet)
@@ -106,5 +108,5 @@ runCardanoOptions :: CardanoOptions -> IO ()
 runCardanoOptions options = runTestnet (maybeTestnetMagic options) $
   Testnet.testnet (CardanoOnlyTestnetOptions $ testnetOptions options)
 
-cmdCardano :: Mod CommandFields (IO ())
-cmdCardano = command "cardano"  $ flip info idm $ runCardanoOptions <$> optsCardano
+cmdCardano :: Mod CommandFields CardanoOptions
+cmdCardano = command' "cardano" "Start a testnet in any era" optsCardano
