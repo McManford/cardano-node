@@ -325,13 +325,13 @@ let
           # `null` because we are using a "template" (see below).
           env = {};
 
-#          resources = {
-#            # Task can only ask for 'cpu' or 'cores' resource, not both.
-#            #cpu = 512;
-#            cores = 5;
-#            memory = 20000;
-#            memory_max = 32768;
-#          };
+          resources = {
+            # Task can only ask for 'cpu' or 'cores' resource, not both.
+            #cpu = 512;
+            cores = 2;
+            memory = 1024*4;
+            #memory_max = 32768;
+          };
 
           # https://developer.hashicorp.com/nomad/docs/job-specification/service
           service = {
