@@ -25,8 +25,7 @@
     };
     utils.url = "github:numtide/flake-utils";
     iohkNix = {
-      # pin iohk-nix to an older revision without the sodium renaming
-      url = "github:input-output-hk/iohk-nix";
+      url = "github:input-output-hk/iohk-nix/angerman/remove-old-envs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     ops-lib = {
