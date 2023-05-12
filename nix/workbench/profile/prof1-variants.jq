@@ -181,6 +181,14 @@ def all_profile_variants:
       }
     } as $aws_eu_only
   |
+    { composition:
+#      { locations:                      ["eu-west-1", "eu-central-1", "us-east-2"]
+      { locations:                      ["EU", "US"]
+      , topology:                       "torus"
+      , with_explorer:                  true
+      }
+    } as $cardano_world_qa
+  |
   ##
   ### Definition vocabulary:  filtering
   ##
@@ -535,6 +543,10 @@ def all_profile_variants:
   , { name: "default"
     , desc: "Default, as per nix/workbench/profile/prof0-defaults.jq"
     }
+  , $cardano_world_qa *
+    { name: "cardano-world-qa-default"
+    , desc: "Default, as per nix/workbench/profile/prof0-defaults.jq"
+    }
   , $plutus_base * $costmodel_v8_preview * $plutus_loop_counter *
     { name: "plutus"
     , desc: "Default with Plutus workload: CPU/memory limit saturation counter loop"
@@ -593,8 +605,8 @@ def all_profile_variants:
   , $citest_base * $with_rtview *
     { name: "ci-test-rtview"
     }
-  , $citest_base * $aws_eu_only *
-    { name: "aws-test"
+  , $citest_base * $cardano_world_qa *
+    { name: "cardano-world-qa-test"
     }
 
   ## CI variants: bench duration, 15 blocks
@@ -618,6 +630,9 @@ def all_profile_variants:
     }
   , $cibench_base * $with_rtview *
     { name: "ci-bench-rtview"
+    }
+  , $cibench_base * $cardano_world_qa *
+    { name: "cardano-world-qa-bench"
     }
 
   ## CI variants: test duration, 3 blocks, dense10
