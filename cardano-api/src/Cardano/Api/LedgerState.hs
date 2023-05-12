@@ -830,7 +830,7 @@ instance FromJSON NodeConfig where
           <*> fmap File (o .: "ConwayGenesisFile")
           <*> fmap GenesisHashConway (o .: "ConwayGenesisHash")
           <*> o .: "RequiresNetworkMagic"
-          <*> parseByronSoftwareVersion o
+          <*> pure undefined -- FIXME expose softwareVersion from somewhere within cardano-api
           <*> parseByronProtocolVersion o
           <*> (Consensus.ProtocolTransitionParamsShelleyBased emptyFromByronTranslationContext
                  <$> parseShelleyHardForkEpoch o)
@@ -848,12 +848,6 @@ instance FromJSON NodeConfig where
           <$> o .: "LastKnownBlockVersion-Major"
           <*> o .: "LastKnownBlockVersion-Minor"
           <*> o .: "LastKnownBlockVersion-Alt"
-
-      parseByronSoftwareVersion :: Object -> Parser Cardano.Chain.Update.SoftwareVersion
-      parseByronSoftwareVersion o =
-        Cardano.Chain.Update.SoftwareVersion
-          <$> fmap Cardano.Chain.Update.ApplicationName (o .: "ApplicationName")
-          <*> o .: "ApplicationVersion"
 
       parseShelleyHardForkEpoch :: Object -> Parser Consensus.TriggerHardFork
       parseShelleyHardForkEpoch o =

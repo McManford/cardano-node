@@ -48,13 +48,8 @@ defaultYamlConfig :: KeyMapAeson.KeyMap Aeson.Value
 defaultYamlConfig =
   mconcat $ map (uncurry KeyMapAeson.singleton)
     [
-    -- TODO: Remnants from the Byron era that we can actually eliminate
-    -- and hardcode.
-      ("ApplicationName", "cardano-sl")
-    , ("ApplicationVersion", Aeson.Number 1)
-
     -- The consensus protocol to use
-    , ("Protocol", "Cardano")
+      ("Protocol", "Cardano")
 
     -- Socket path of the node
     , ("SocketPath", "db/node.socket")

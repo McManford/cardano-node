@@ -10,6 +10,9 @@ module Cardano.Node.Protocol.Byron
     -- * Reusable parts
   , readGenesis
   , readLeaderCredentials
+  , applicationName
+  , applicationVersion
+  , softwareVersion
   ) where
 
 import           Cardano.Prelude (ConvertText (..), canonicalDecodePretty)
@@ -49,7 +52,6 @@ import           Control.Monad.Trans.Except (ExceptT)
 import           Data.Text (Text)
 
 
-
 ------------------------------------------------------------------------------
 -- Byron protocol
 --
@@ -70,8 +72,6 @@ mkSomeConsensusProtocolByron NodeByronProtocolConfiguration {
                            npcByronGenesisFileHash,
                            npcByronReqNetworkMagic,
                            npcByronPbftSignatureThresh,
-                           npcByronApplicationName,
-                           npcByronApplicationVersion,
                            npcByronSupportedProtocolVersionMajor,
                            npcByronSupportedProtocolVersionMinor,
                            npcByronSupportedProtocolVersionAlt
@@ -92,10 +92,7 @@ mkSomeConsensusProtocolByron NodeByronProtocolConfiguration {
             npcByronSupportedProtocolVersionMajor
             npcByronSupportedProtocolVersionMinor
             npcByronSupportedProtocolVersionAlt,
-        byronSoftwareVersion =
-          Update.SoftwareVersion
-            npcByronApplicationName
-            npcByronApplicationVersion,
+        byronSoftwareVersion = softwareVersion,
         byronLeaderCredentials =
           optionalLeaderCredentials,
         byronMaxTxCapacityOverrides =
@@ -172,11 +169,14 @@ readLeaderCredentials genesisConfig
            . hoistEither
            $ mkByronLeaderCredentials genesisConfig signingKey delegCert "Byron"
 
+applicationName :: Update.ApplicationName
+applicationName = Update.ApplicationName "cardano-sl"
 
+applicationVersion :: Update.NumSoftwareVersion
+applicationVersion = 1
 
-------------------------------------------------------------------------------
--- Byron Errors
---
+softwareVersion :: Update.SoftwareVersion
+softwareVersion = Update.SoftwareVersion applicationName applicationVersion
 
 data ByronProtocolInstantiationError =
     CanonicalDecodeFailure !FilePath !Text

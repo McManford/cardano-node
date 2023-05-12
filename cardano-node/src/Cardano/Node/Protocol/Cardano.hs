@@ -20,7 +20,7 @@ import           Prelude
 import           Control.Monad.Trans.Except (ExceptT)
 import           Control.Monad.Trans.Except.Extra (firstExceptT)
 
-import qualified Cardano.Chain.Update as Byron
+import qualified Cardano.Chain.Update as Update
 
 import           Ouroboros.Consensus.Cardano
 import qualified Ouroboros.Consensus.Cardano as Consensus
@@ -76,8 +76,6 @@ mkSomeConsensusProtocolCardano NodeByronProtocolConfiguration {
                              npcByronGenesisFileHash,
                              npcByronReqNetworkMagic,
                              npcByronPbftSignatureThresh,
-                             npcByronApplicationName,
-                             npcByronApplicationVersion,
                              npcByronSupportedProtocolVersionMajor,
                              npcByronSupportedProtocolVersionMinor,
                              npcByronSupportedProtocolVersionAlt
@@ -162,14 +160,11 @@ mkSomeConsensusProtocolCardano NodeByronProtocolConfiguration {
           -- protocol version is 1, this should be 2 to indicate we are ready
           -- to move into the Shelley era.
           byronProtocolVersion =
-            Byron.ProtocolVersion
+            Update.ProtocolVersion
               npcByronSupportedProtocolVersionMajor
               npcByronSupportedProtocolVersionMinor
               npcByronSupportedProtocolVersionAlt,
-          byronSoftwareVersion =
-            Byron.SoftwareVersion
-              npcByronApplicationName
-              npcByronApplicationVersion,
+          byronSoftwareVersion = Byron.softwareVersion,
           byronLeaderCredentials =
             byronLeaderCredentials,
           byronMaxTxCapacityOverrides =
