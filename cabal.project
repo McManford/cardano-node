@@ -100,3 +100,14 @@ package snap-server
 -- IMPORTANT
 -- Do NOT add more source-repository-package stanzas here unless they are strictly
 -- temporary! Please read the section in CONTRIBUTING about updating dependencies.
+
+source-repository-package
+  type: git
+  location: https://github.com/input-output-hk/ouroboros-consensus
+  tag: c168b744e445b29e6e62cf90a2b5540969b8854c
+  --sha256: 06hrcm8wkbx0l6hbqsfbw4yv8waikgfqpyw7sph3gf1mfx8cpm43
+  subdir:
+    ouroboros-consensus
+    ouroboros-consensus-cardano
+    ouroboros-consensus-diffusion
+    ouroboros-consensus-protocol
