@@ -124,7 +124,7 @@ import           Cardano.Api.Shelley (GovernancePoll (..), GovernancePollAnswer 
                    PlutusScript (PlutusScriptSerialised), ProtocolParameters (ProtocolParameters),
                    ReferenceScript (..), ReferenceTxInsScriptsInlineDatumsSupportedInEra (..),
                    StakeCredential (StakeCredentialByKey), StakePoolKey,
-                   refInsScriptsAndInlineDatsSupportedInEra)
+                   refInsScriptsAndInlineDatsSupportedInEra, scriptInEraToRefScript)
 
 
 import           Control.Applicative (optional)
@@ -512,7 +512,7 @@ genReferenceScript :: CardanoEra era -> Gen (ReferenceScript era)
 genReferenceScript era =
   case refInsScriptsAndInlineDatsSupportedInEra era of
     Nothing -> return ReferenceScriptNone
-    Just supp -> ReferenceScript supp <$> genScriptInAnyLang
+    Just _ -> scriptInEraToRefScript <$> genScriptInEra era
 
 genUTxO :: CardanoEra era -> Gen (UTxO era)
 genUTxO era =

@@ -12,6 +12,7 @@
   produces a Map with `StakeCredential` to a deposit for every deregistration certificate
   in the supplied list
 
+- Updated ledger dependency bounds
 
 ### Features
 

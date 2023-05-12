@@ -139,6 +139,7 @@ module Cardano.Api.Shelley
     scriptDataFromJsonDetailedSchema,
     scriptDataToJsonDetailedSchema,
     calculateExecutionUnitsLovelace,
+    scriptInEraToRefScript,
 
     -- * Reference Scripts
     ReferenceScript(..),
